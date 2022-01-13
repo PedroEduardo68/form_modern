@@ -7,10 +7,10 @@ class App extends Component {
   render() {
     return (
       <>
-        <Container component="article" maxWidth>
+        <Container component="article" maxWidth="sm">
           <h1>Formulario de Cadastro</h1>
           <FormularioCadastro />
-        <Container />
+        </Container >
       </>
     );
   }
