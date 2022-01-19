@@ -4,23 +4,32 @@ import DadosUsuario from './DadosUsuario'
 import DadosEntrega from './DadosEntrega'
 //import { Typography } from '@material-ui/core';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const FormularioCadastro = ({ aoEnviar, validarCPF }) => {
 
+  useEffect(() => {
+    console.log(dadoscoletados);
+  })
+
   const [etapaAtual, setEtapaAtual] = useState(0)
+  const [dadoscoletados, setDados] = useState({});
 
   const proximo = () => {
     setEtapaAtual(etapaAtual + 1);
   }
 
-  const voltar = () => {
-    setEtapaAtual(etapaAtual - 1);
+  const coletarDados = (dados) => {
+    setDados({ ...dadoscoletados, ...dados })
+    console.log(dados)
+    proximo();
   }
 
+
   const formuario = [
-    <DadosUsuario aoEnviar={proximo} />,
-    <DadosPessoais aoEnviar={proximo} validarCPF={validarCPF} />,
-    <DadosEntrega aoEnviar={aoEnviar} />
+    <DadosUsuario aoEnviar={coletarDados} />,
+    <DadosPessoais aoEnviar={coletarDados} validarCPF={validarCPF} />,
+    <DadosEntrega aoEnviar={aoEnviar} />,
   ]
 
 

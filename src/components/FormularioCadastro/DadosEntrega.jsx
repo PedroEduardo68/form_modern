@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import { useState } from "react";
 
-const DadosEntrega = (aoEnviar) => {
+const DadosEntrega = ({ aoEnviar }) => {
   const [cep, setCep] = useState("")
   const [endereco, setEndereco] = useState("")
   const [numero, setNumero] = useState("")
