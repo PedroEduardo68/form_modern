@@ -5,7 +5,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
-const DadosPessoasis = ({ aoEnviar, validarCPF }) => {
+const DadosPessoasis = ({ aoEnviar, validacoes }) => {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -14,7 +14,9 @@ const DadosPessoasis = ({ aoEnviar, validarCPF }) => {
   const [novidades, setNovidades] = useState(true);
   const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } })
 
+  const ValidarCampos(event){
 
+  }
 
   return (
     <>

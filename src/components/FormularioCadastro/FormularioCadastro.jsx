@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Stepper, Step, StepLabel, Typography } from '@material-ui/core';
 
-const FormularioCadastro = ({ aoEnviar, validarCPF }) => {
+const FormularioCadastro = ({ aoEnviar, validacoes }) => {
 
   useEffect(() => {
     if (etapaAtual == formuario.length - 1) {
@@ -30,9 +30,9 @@ const FormularioCadastro = ({ aoEnviar, validarCPF }) => {
 
 
   const formuario = [
-    <DadosUsuario aoEnviar={coletarDados} />,
-    <DadosPessoais aoEnviar={coletarDados} validarCPF={validarCPF} />,
-    <DadosEntrega aoEnviar={aoEnviar} />,
+    <DadosUsuario aoEnviar={coletarDados} validacoes={validacoes} />,
+    <DadosPessoais aoEnviar={coletarDados} validacoes={validacoes} />,
+    <DadosEntrega aoEnviar={aoEnviar} validacoes={validacoes} />,
     <Typography variant='h5' > Obrigado pelo Cadastro </Typography>
   ]
 
