@@ -15,6 +15,10 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
   const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" } });
 
   function validarCampos(event) {
+
+    console.log(validacoes["cpf"](1234))
+
+
     const { name, value } = event.target;
     const novoEstado = { ...erros };
     novoEstado[name] = validacoes[name](value);

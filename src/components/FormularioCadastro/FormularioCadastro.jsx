@@ -10,8 +10,9 @@ import { Stepper, Step, StepLabel, Typography } from '@material-ui/core';
 const FormularioCadastro = ({ aoEnviar, validacoes }) => {
 
   useEffect(() => {
-    if (etapaAtual == formuario.length - 1) {
+    if (etapaAtual === formuario.length - 1) {
       console.log(dadoscoletados);
+
     }
   })
 
