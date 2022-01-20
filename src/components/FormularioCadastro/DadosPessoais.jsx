@@ -14,8 +14,11 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
   const [novidades, setNovidades] = useState(true);
   const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } })
 
-  const ValidarCampos(event){
-
+  const ValidarCampos = (event) => {
+    const { name, value } = event.target
+    const novoEstado = { ...erros }
+    novoEstado[name] = validacoes[name](value)
+    setErros({ novoEstado })
   }
 
   return (
@@ -26,12 +29,14 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
       }}>
         <TextField id="nome" label="Nome" variant="outlined" fullWidth margin="normal" value={nome}
           required
+          name="nome"
           onChange={(event) => {
             setNome(event.target.value)
           }} />
 
         <TextField id="sobrenome" label="Sobremome" variant="outlined" fullWidth margin="normal"
           required
+          name="sobrenome"
           value={sobrenome}
           onChange={(event) => {
             setSobrenome(event.target.value)
@@ -39,19 +44,19 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
 
         <TextField id="cpf" label="CPF" variant="outlined" fullWidth margin="normal"
           required
+
           value={cpf}
           helperText={erros.cpf.texto}
           error={!erros.cpf.valido}
-          onBlur={(event) => {
-            const ehvalido = validarCPF(event.target.value)
-            setErros({ cpf: ehvalido })
-          }}
+          name="cpf"
           onChange={(event) => {
             setCpf(event.target.value)
-          }} />
+          }}
+          onBlur={ValidarCampos} />
 
         <FormControlLabel
           label="Promoções"
+          name="promocoes"
           required
           control={<Switch
             name="promocoes"
@@ -67,6 +72,7 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
         <FormControlLabel
           label="Novidades"
           required
+          name="novidades"
           control={<Switch
             name="novidades"
             checked={novidades}
