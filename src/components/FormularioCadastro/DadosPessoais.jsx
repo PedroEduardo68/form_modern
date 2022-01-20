@@ -15,9 +15,11 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
   const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } })
 
   const ValidarCampos = (event) => {
+
     const { name, value } = event.target
     const novoEstado = { ...erros }
-    novoEstado[name] = validacoes[name](value)
+    novoEstado[name] = validacoes[name](value);
+    console.log(novoEstado)
     setErros({ novoEstado })
   }
 
@@ -44,15 +46,16 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
 
         <TextField id="cpf" label="CPF" variant="outlined" fullWidth margin="normal"
           required
-
           value={cpf}
           helperText={erros.cpf.texto}
           error={!erros.cpf.valido}
+          onBlur={ValidarCampos}
           name="cpf"
+
           onChange={(event) => {
             setCpf(event.target.value)
           }}
-          onBlur={ValidarCampos} />
+        />
 
         <FormControlLabel
           label="Promoções"
