@@ -12,15 +12,13 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
 
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } })
+  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" } });
 
-  const ValidarCampos = (event) => {
-
-    const { name, value } = event.target
-    const novoEstado = { ...erros }
+  function validarCampos(event) {
+    const { name, value } = event.target;
+    const novoEstado = { ...erros };
     novoEstado[name] = validacoes[name](value);
-    console.log(novoEstado)
-    setErros({ novoEstado })
+    setErros(novoEstado);
   }
 
   return (
@@ -31,6 +29,9 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
       }}>
         <TextField id="nome" label="Nome" variant="outlined" fullWidth margin="normal" value={nome}
           required
+          onBlur={validarCampos}
+          error={!erros.nome.valido}
+          helperText={erros.nome.texto}
           name="nome"
           onChange={(event) => {
             setNome(event.target.value)
@@ -47,9 +48,9 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
         <TextField id="cpf" label="CPF" variant="outlined" fullWidth margin="normal"
           required
           value={cpf}
-          helperText={erros.cpf.texto}
+          onBlur={validarCampos}
           error={!erros.cpf.valido}
-          onBlur={ValidarCampos}
+          helperText={erros.cpf.texto}
           name="cpf"
 
           onChange={(event) => {
