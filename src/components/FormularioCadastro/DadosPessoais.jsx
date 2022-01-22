@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ValidacoesCadastro from '../context/ValidaçõesCadastro';
-
+import useErros from "../../hooks/useErros"
 
 const DadosPessoasis = ({ aoEnviar }) => {
   const [nome, setNome] = useState("");
@@ -14,28 +14,11 @@ const DadosPessoasis = ({ aoEnviar }) => {
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
   const validacoes = useContext(ValidacoesCadastro)
-
-
-  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" } });
-  function validarCampos(event) {
-    const { name, value } = event.target;
-    const novoEstado = { ...erros };
-    novoEstado[name] = validacoes[name](value);
-    setErros(novoEstado);
-  }
+  const [erros, ValidarCampos, possoEnviar] = useErros(validacoes);
 
 
 
 
-  const possoEnviar = () => {
-    for (let campo in erros) {
-      if (!erros[campo].valido) {
-        return false;
-      }
-      return true;
-    }
-
-  }
 
   return (
     <>
@@ -48,7 +31,7 @@ const DadosPessoasis = ({ aoEnviar }) => {
       }}>
         <TextField id="nome" label="Nome" variant="outlined" fullWidth margin="normal" value={nome}
           required
-          onBlur={(event) => validarCampos(event)}
+          onBlur={(event) => ValidarCampos(event)}
           error={!erros.nome.valido}
           helperText={erros.nome.texto}
           name="nome"
@@ -67,7 +50,7 @@ const DadosPessoasis = ({ aoEnviar }) => {
         <TextField id="cpf" label="CPF" variant="outlined" fullWidth margin="normal"
           required
           value={cpf}
-          onBlur={validarCampos}
+          onBlur={(event) => ValidarCampos(event)}
           error={!erros.cpf.valido}
           helperText={erros.cpf.texto}
           name="cpf"

@@ -7,7 +7,6 @@ const ValidacoesCadastro = React.createContext({
 });
 
 function semValidacao(dados) {
-
   return { valido: true, texto: ""}
 }
 
