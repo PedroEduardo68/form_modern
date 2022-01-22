@@ -13,9 +13,19 @@ const DadosPessoasis = ({ aoEnviar }) => {
 
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" } });
-
   const validacoes = useContext(ValidacoesCadastro)
+
+
+  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" } });
+  function validarCampos(event) {
+    const { name, value } = event.target;
+    const novoEstado = { ...erros };
+    novoEstado[name] = validacoes[name](value);
+    setErros(novoEstado);
+  }
+
+
+
 
   const possoEnviar = () => {
     for (let campo in erros) {
@@ -25,17 +35,6 @@ const DadosPessoasis = ({ aoEnviar }) => {
       return true;
     }
 
-  }
-
-  function validarCampos(event) {
-
-    console.log(validacoes["cpf"](1234))
-
-
-    const { name, value } = event.target;
-    const novoEstado = { ...erros };
-    novoEstado[name] = validacoes[name](value);
-    setErros(novoEstado);
   }
 
   return (
