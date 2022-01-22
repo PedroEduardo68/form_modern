@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ValidacoesCadastro from '../context/ValidaçõesCadastro';
 
 
-const DadosPessoasis = ({ aoEnviar, validacoes }) => {
+const DadosPessoasis = ({ aoEnviar }) => {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -13,6 +14,18 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
   const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" } });
+
+  const validacoes = useContext(ValidacoesCadastro)
+
+  const possoEnviar = () => {
+    for (let campo in erros) {
+      if (!erros[campo].valido) {
+        return false;
+      }
+      return true;
+    }
+
+  }
 
   function validarCampos(event) {
 
@@ -29,11 +42,14 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
     <>
       <form onSubmit={(event) => {
         event.preventDefault()
-        aoEnviar({ nome, sobrenome, cpf, promocoes, novidades })
+        if (possoEnviar()) {
+          aoEnviar({ nome, sobrenome, cpf, promocoes, novidades })
+        }
+
       }}>
         <TextField id="nome" label="Nome" variant="outlined" fullWidth margin="normal" value={nome}
           required
-          onBlur={validarCampos}
+          onBlur={(event) => validarCampos(event)}
           error={!erros.nome.valido}
           helperText={erros.nome.texto}
           name="nome"
@@ -92,7 +108,7 @@ const DadosPessoasis = ({ aoEnviar, validacoes }) => {
         />
 
 
-        <Button type="submit" variant="contained" color="primary">Cadastrar</Button>
+        <Button type="submit" variant="contained" color="primary">Proximo</Button>
 
       </form>
     </>
